@@ -23,7 +23,7 @@ public:
 	}
 	
 	void CheckInBaggage(Baggage* baggage); // Add baggage to the baggage array
-	Baggage RemoveBaggage(); // Send the baggage to the baggage sorting system
+	Baggage* RemoveBaggage(); // Send the baggage to the baggage sorting system
 
 	bool IsFull() { return index >= CHECKIN_MAX_QUEUE; } // Check if the baggage array is full
 

@@ -6,13 +6,13 @@ static inline std::atomic<int> latestBaggageId = 0; // Ensures that the next bag
 class Baggage
 {
 public:
-	Baggage() { id = latestBaggageId++; destination = 0; }
+	Baggage();
 	~Baggage() {}
 	// Getters
 	int GetID() const { return id; } // Get the ID of the baggage
-	int GetDestination() const { return destination; } // Get the destination of the baggage
+	int GetDestinationTerminal() const { return destinationTerminal; } // Get the destination of the baggage
 
 private:
 	int id;
-	int destination;
+	int destinationTerminal;
 };

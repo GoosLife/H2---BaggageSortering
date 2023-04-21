@@ -21,7 +21,7 @@ void BaggageSplitter::Run()
 
 					for (int j = 0; j < amountOfBaggage; j++)
 					{
-						Baggage baggage = referenceToSelf->GetCheckInDesk(i)->RemoveBaggage();
+						Baggage* baggage = referenceToSelf->GetCheckInDesk(i)->RemoveBaggage();
 						referenceToSelf->SortBaggage(baggage);
 					}
 				}
@@ -35,7 +35,26 @@ void BaggageSplitter::Run()
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 }
 
-void BaggageSplitter::SortBaggage(Baggage baggage)
+void BaggageSplitter::SortBaggage(Baggage* baggage)
 {
+	std::unique_lock terminalLock(*Terminal::GetMutex(), std::defer_lock);
 
+	BaggageSplitter* referenceToSelf = this;
+
+	Terminal::GetConditionVariable()->wait(terminalLock, [&referenceToSelf, baggage]
+		{
+			// std::cout << "Baggagesplitter has the lock\n";
+			// Check if there is any baggage to sort
+			for (int i = 0; i < Airport::NumberOfTerminals; i++)
+			{
+				if (baggage->GetDestinationTerminal() == referenceToSelf->GetTerminal(i)->GetID())
+				{
+					referenceToSelf->GetTerminal(i)->AddBaggage(baggage);
+				}
+			}
+			// std::cout << "Baggagesplitter is releasing the lock\n";
+			return true;
+		});
+
+	Terminal::GetConditionVariable()->notify_one();
 }

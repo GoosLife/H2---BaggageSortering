@@ -23,7 +23,7 @@ public:
 	}
 	~BaggageSplitter() {}
 	void Run(); // Run the baggage splitter
-	void SortBaggage(Baggage baggage); // Sort the baggage into the correct flights
+	void SortBaggage(Baggage* baggage); // Sort the baggage into the correct flights
 
 	CheckInDesk* GetCheckInDesk(int index) { return checkInDesks[index]; }
 	Terminal* GetTerminal(int index) { return terminals[index]; }
