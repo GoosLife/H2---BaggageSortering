@@ -9,8 +9,8 @@ public:
 	Baggage() { id = latestBaggageId++; destination = 0; }
 	~Baggage() {}
 	// Getters
-	int GetBaggageID() const { return id; } // Get the ID of the baggage
-	int GetBaggageDestination() const { return destination; } // Get the destination of the baggage
+	int GetID() const { return id; } // Get the ID of the baggage
+	int GetDestination() const { return destination; } // Get the destination of the baggage
 
 private:
 	int id;

@@ -14,25 +14,28 @@ public:
 			baggage[i] = nullptr;
 		}
 
-		mtx = new std::mutex();
-		cv = new std::condition_variable();
+		isFull = index >= CHECKIN_MAX_QUEUE;
 	}
-	~CheckInDesk() {}
+
+	~CheckInDesk() {
+		delete(mtx);
+		delete(cv);
+	}
 	
-	void CheckInBaggage(Baggage baggage); // Add baggage to the baggage array
+	void CheckInBaggage(Baggage* baggage); // Add baggage to the baggage array
 	Baggage RemoveBaggage(); // Send the baggage to the baggage sorting system
 
 	bool IsFull() { return index >= CHECKIN_MAX_QUEUE; } // Check if the baggage array is full
 
 	// Getters
 	int GetBaggageCount() { return index; }
-	std::mutex* GetMutex() { return mtx; }
-	std::condition_variable* GetConditionVariable() { return cv; }
+	static inline std::mutex* GetMutex() { return mtx; }
+	static inline std::condition_variable* GetConditionVariable() { return cv; }
 
 private:
-	bool isFull = index >= CHECKIN_MAX_QUEUE;
+	bool isFull;
 	int index = 0; // Index of the next available spot in the baggage array
 	Baggage* baggage[CHECKIN_MAX_QUEUE];
-	std::mutex* mtx = nullptr;
-	std::condition_variable* cv = nullptr;
+	static inline std::mutex* mtx = new std::mutex();
+	static inline std::condition_variable* cv = new std::condition_variable();
 };

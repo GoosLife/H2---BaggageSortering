@@ -1,8 +1,9 @@
-#include "Spawner.h"
 #include "Airport.h"
 #include "Baggage.h"
+#include "BaggageSplitter.h"
 #include "CheckInDesk.h"
 #include "Flight.h"
+#include "Spawner.h"
 
 #include <condition_variable>
 #include <iostream>
@@ -17,13 +18,23 @@ int main()
     Spawner<Baggage> baggageSpawner;
     Spawner<Flight> flightSpawner;
 
-    // Create a number of check in desks and start loading in baggage
+    // Create a number of check in desks
     CheckInDesk* checkInDesks[Airport::NumberOfCheckInDesks];
 
     for (int i = 0; i < Airport::NumberOfCheckInDesks; i++) {
-        checkInDesks[i] = new CheckInDesk();
+        CheckInDesk* checkInDeskInstance = new CheckInDesk();
+        checkInDesks[i] = checkInDeskInstance;
     }
 
+    // Create a number of terminals
+    Terminal* terminals[Airport::NumberOfTerminals];
+
+    for (int i = 0; i < Airport::NumberOfTerminals; i++)
+    {
+        terminals[i] = new Terminal();
+    }
+
+    // Start the check in desks
     std::thread checkInThreads[Airport::NumberOfCheckInDesks];
 
     for (int i = 0; i < Airport::NumberOfCheckInDesks; i++) {
@@ -33,14 +44,32 @@ int main()
             std::mt19937_64 rng(rd()); // seed the generator
             std::uniform_int_distribution<int> uni(500, 2000); // define the range
 
+            std::this_thread::sleep_for(std::chrono::seconds(index));
+
             while (true) {
                 // Spawn a new passenger every 0.5 - 2 seconds as long as the check in desk buffer is not full
                 if (checkInDesks[index]->IsFull()) {
                     break;
                 }
                 else {
-                    Baggage baggage = baggageSpawner.Spawn();
-                    checkInDesks[index]->CheckInBaggage(baggage);
+                    std::unique_lock ul(*CheckInDesk::GetMutex(), std::defer_lock);
+                    CheckInDesk::GetConditionVariable()->wait(ul, [index, &checkInDesks, &baggageSpawner]
+                        {
+                            if (CheckInDesk::GetMutex()->try_lock())
+                            {
+                                std::cout << "Thread " << index << " is spawning baggage\n"; // DEBUG
+
+                                Baggage baggage = baggageSpawner.Spawn();
+                                std::cout << "Spawned baggage with id " << baggage.GetID() << " and destination " << baggage.GetDestination() << "\n";
+                                checkInDesks[index]->CheckInBaggage(&baggage);
+                                
+                                CheckInDesk::GetMutex()->unlock();
+                            }
+
+                            return true;
+                        });
+                    // std::cout << "Thread " << index << " is notifying\n";  // DEBUG
+                    CheckInDesk::GetConditionVariable()->notify_one();
                 }
                 int sleepFor = uni(rng);
                 std::cout << "Thread " << index << " is sleeping for " << sleepFor << " ms\n";
@@ -48,6 +77,17 @@ int main()
             }
             });
     }
+
+    // Start the baggage splitter
+    BaggageSplitter baggageSplitter(checkInDesks, terminals);
+
+    std::thread baggageSplitterThread([&baggageSplitter]
+        {
+            while (true)
+            {
+                baggageSplitter.Run();
+            }
+        });
 
 
 
@@ -57,7 +97,7 @@ int main()
         for (int i = 0; i < Airport::NumberOfCheckInDesks; i++) {
             std::cout << "Desk " << i << " has " << checkInDesks[i]->GetBaggageCount() << " baggage in queue\n";
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
 
     // Join threads

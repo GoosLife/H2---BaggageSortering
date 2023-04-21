@@ -1,8 +1,8 @@
 #include "CheckInDesk.h"
 #include "Baggage.h"
 
-void CheckInDesk::CheckInBaggage(Baggage b) {
-	baggage[index] = &b;
+void CheckInDesk::CheckInBaggage(Baggage* b) {
+	baggage[index] = b;
 	index++;
 	isFull = index >= CHECKIN_MAX_QUEUE;
 }
