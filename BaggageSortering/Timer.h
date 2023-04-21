@@ -22,10 +22,12 @@ public:
 	~Timer() {}
 	void DisplayClock();
 	void Run();
+	static inline int GetGlobalTime() { return globalTime; }
 private:
 	int hours;
 	int minutes;
 	int seconds;
 	static inline std::time_t static_later;
+	static inline std::atomic<int> globalTime;
 };
 
