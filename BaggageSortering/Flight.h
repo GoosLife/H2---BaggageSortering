@@ -7,6 +7,12 @@
 									// Used for initializing the baggage array
 									// The actual maximum amount of baggage that can be loaded on a flight is a random number between 30 and 180
 
+struct Time {
+	int hours;
+	int minutes;
+	int seconds;
+};
+
 class Flight
 {
 	public:

@@ -4,6 +4,7 @@
 #include "CheckInDesk.h"
 #include "Flight.h"
 #include "Spawner.h"
+#include "Timer.h"
 
 #include <condition_variable>
 #include <iostream>
@@ -107,6 +108,12 @@ int main()
         }
     }
 
+    // Create clock
+    Timer* t = new Timer(23, 59, 30);
+
+    std::thread timerThread([t] {
+        t->Run();
+        });
 
     while (true) {
         system("CLS");
@@ -120,8 +127,10 @@ int main()
         }
 
         for (int i = 0; i < Airport::NumberOfTerminals; i++) {
-            std::cout << "Terminal " << i << " next flight: " << terminals[i]->GetFlight()->GetID() << " to  " << terminals[i]->GetFlight()->GetDestination() << " | Loaded baggage: " << terminals[i]->GetFlight()->GetBaggageCount() << "\n";
+            std::cout << "Terminal " << i << " next flight: " << terminals[i]->GetFlight()->GetID() << " to  " << terminals[i]->GetFlight()->GetDestination() << " | Loaded baggage: " << terminals[i]->GetFlight()->GetBaggageCount() << "/" << terminals[i]->GetFlight()->GetMaxBaggage() << "\n";
         }
+
+        t->DisplayClock();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
     }
