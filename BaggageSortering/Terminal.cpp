@@ -15,28 +15,37 @@ void Terminal::Run()
 
 	Terminal* referenceToSelf = this;
 
-
 	Terminal::GetConditionVariable()->wait(ul, [&referenceToSelf] {
 
-		// Escape if the flight is full
-		if (referenceToSelf->GetFlight()->IsFull()) {
-			return true;
-		}
+			// Escape if the flight is full
+			if (!referenceToSelf->GetFlight()->IsFull())
+			{
+				int startIndex = referenceToSelf->GetFlight()->GetBaggageCount();
+				int maxValue = referenceToSelf->GetFlight()->GetMaxBaggage();
 
-		int startIndex = referenceToSelf->GetFlight()->GetBaggageCount();
-		int maxValue = referenceToSelf->GetFlight()->GetMaxBaggage();
+				int maxIterations = maxValue - startIndex;
 
-		int maxIterations = maxValue - startIndex;
-
-		for (int i = 0; i < maxIterations; i++) {
-			if (referenceToSelf->GetBaggageCount() > 0) {
-				Baggage* baggageToLoad = referenceToSelf->RemoveBaggage();
-				referenceToSelf->GetFlight()->LoadBaggage(baggageToLoad);
+				for (int i = 0; i < maxIterations; i++)
+				{
+					if (referenceToSelf->GetBaggageCount() > 0)
+					{
+						Baggage* baggageToLoad = referenceToSelf->RemoveBaggage();
+						referenceToSelf->GetFlight()->LoadBaggage(baggageToLoad);
+					}
+					else
+					{
+						break; // No more baggage to load
+					}
+				}
 			}
-			else {
-				break; // No more baggage to load
+
+			if (referenceToSelf->GetFlight()->IsDepartureTime())
+			{
+				referenceToSelf->GetFlight()->Depart();
+					
+				// Get the next flight
+				referenceToSelf->GetNextFlight();
 			}
-		}
 
 		return true;});
 
@@ -62,4 +71,6 @@ Baggage* Terminal::RemoveBaggage()
 
 void Terminal::GetNextFlight()
 {
+	// Get the next flight from the flight list
+	flight = new Flight(); // TODO: Get the next flight from the flight list instead of creating a new one. The flight list is a static variable in the Airport class that contains all the flights for the day
 }

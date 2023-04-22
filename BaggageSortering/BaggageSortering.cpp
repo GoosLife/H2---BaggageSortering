@@ -39,7 +39,7 @@ int main()
 
     for (int i = 0; i < Airport::NumberOfCheckInDesks; i++) {
         int index = i; // Create a copy of i to pass to the thread
-        checkInThreads[index] = std::thread([index, &checkInDesks, &baggageSpawner] {
+        checkInThreads[index] = std::thread([index, &checkInDesks, &terminals, &baggageSpawner] {
             std::random_device rd; // obtain a random number from hardware
             std::mt19937_64 rng(rd()); // seed the generator
             std::uniform_int_distribution<int> uni(500, 2000); // define the range
@@ -53,30 +53,41 @@ int main()
                 }
                 else {
                     std::unique_lock ul(*CheckInDesk::GetMutex(), std::defer_lock);
-                    CheckInDesk::GetConditionVariable()->wait(ul, [index, &checkInDesks, &baggageSpawner]
+                    CheckInDesk::GetConditionVariable()->wait(ul, [index, &checkInDesks, &terminals, &baggageSpawner]
                         {
                             if (CheckInDesk::GetMutex()->try_lock())
                             {
-                                // std::cout << "Thread " << index << " is spawning baggage\n"; // DEBUG
+                                Baggage* baggage = baggageSpawner.Spawn(); 
 
-                                Baggage* baggage = baggageSpawner.Spawn();
+                                // If there is place in the terminal, check in the baggage, otherwise refuse it
 
-                                // TODO: Check if bagge destination terminal is full
-                                // TODO: If full, baggage is turned down (we can't sell more tickets than we have available storage space for)
+                                // TODO: It would be better if full terminals weren't available to be spawned to in the first place, because then we could avoid this check
+                                // and it would also be more realistic (passengers would ideally not be able to book a flight to a full terminal)
+                                // Right now, it is like a customer shows up at the airport, with tickets and everything, only to be told that the terminal is full when they get try to check in their baggage
+                                // Alternatively, it would also have been nicer to do the check in the terminal when we add the baggage (because then we would be doing standard array indexing operations error handling,
+                                // instead of checking in main if a something is full in an entirely different class........ but yeah)
+                                // 
+                                // Just to show that I am aware of this, but have chosen to prioritize differently with the goal of finishing the project in time :)
+                                // 
+                                // But this works for now, and I need to create a GUI for this project, so I'll put this on the back burner and implement it if I have time
 
-                                // std::cout << "Spawned baggage with id " << baggage->GetID() << " and destination " << baggage->GetDestination() << "\n";
-                                checkInDesks[index]->CheckInBaggage(baggage);
-
+                                if (terminals[baggage->GetDestinationTerminal()]->GetBaggageCount() < Terminal::GetMaxBaggage())
+                                {
+                                    checkInDesks[index]->CheckInBaggage(baggage);
+                                }
+                                else
+                                {
+                                    delete(baggage); // Refuse baggage, we can't take in more baggage than we have storage space for in the terminals
+                                }
                                 CheckInDesk::GetMutex()->unlock();
                             }
 
                             return true;
                         });
-                    // std::cout << "Thread " << index << " is notifying\n";  // DEBUG
                     CheckInDesk::GetConditionVariable()->notify_one();
                 }
+
                 int sleepFor = uni(rng);
-                // std::cout << "Thread " << index << " is sleeping for " << sleepFor << " ms\n";
                 std::this_thread::sleep_for(std::chrono::milliseconds(sleepFor));
             }
             });
@@ -123,11 +134,11 @@ int main()
         }
 
         for (int i = 0; i < Airport::NumberOfTerminals; i++) {
-            std::cout << "Terminal " << i << " has " << terminals[i]->GetBaggageCount() << " baggage in queue\n";
+            std::cout << "Terminal " << i << " has " << terminals[i]->GetBaggageCount() << "/" << Terminal::GetMaxBaggage() << " baggage in queue\n";
         }
 
         for (int i = 0; i < Airport::NumberOfTerminals; i++) {
-            std::cout << "Terminal " << i << " next flight: " << terminals[i]->GetFlight()->GetID() << " to  " << terminals[i]->GetFlight()->GetDestination() << " | Loaded baggage: " << terminals[i]->GetFlight()->GetBaggageCount() << "/" << terminals[i]->GetFlight()->GetMaxBaggage() << "\n";
+            std::cout << "Terminal " << i << " next flight: " << terminals[i]->GetFlight()->GetID() << " to  " << terminals[i]->GetFlight()->GetDestination() << " | Loaded baggage: " << terminals[i]->GetFlight()->GetBaggageCount() << "/" << terminals[i]->GetFlight()->GetMaxBaggage() << "\t| Departure time: " << terminals[i]->GetFlight()->GetDepartureTime() << " | Global time: " << Timer::GetGlobalTime() << " Departure time: " << terminals[i]->GetFlight()->GetFlightTime() << " | Time to departure: " << terminals[i]->GetFlight()->GetFlightTime() - Timer::GetGlobalTime() << "s\n";
         }
 
         t->DisplayClock();

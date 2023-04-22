@@ -21,8 +21,12 @@ public:
 	int GetID() const { return id; } // Get the ID of the terminal
 	Flight* GetFlight() { return flight; }
 	int GetBaggageCount() { return index; }
+	
+	static inline int GetMaxBaggage() { return TERMINAL_MAX_BAGGAGE; }
 	static inline std::mutex* GetMutex() { return mtx; }
 	static inline std::condition_variable* GetConditionVariable() { return cv; }
+
+
 
 	// Setters
 	void DecrementBaggageCount() { index--; }

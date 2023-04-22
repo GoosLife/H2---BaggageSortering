@@ -133,6 +133,7 @@
     <ClCompile Include="BaggageSplitter.cpp" />
     <ClCompile Include="CheckInDesk.cpp" />
     <ClCompile Include="Flight.cpp" />
+    <ClCompile Include="FlightScheduler.cpp" />
     <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="Terminal.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="BaggageSplitter.h" />
     <ClInclude Include="CheckInDesk.h" />
     <ClInclude Include="Flight.h" />
+    <ClInclude Include="FlightScheduler.h" />
     <ClInclude Include="Passenger.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="Terminal.h" />
