@@ -15,22 +15,102 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Airport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Baggage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaggageSplitter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckInDesk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Flight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FlightScheduler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Passenger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terminal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoaderParams.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Baggage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="BaggageSortering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Spawner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Flight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Baggage.cpp">
+    <ClCompile Include="BaggageSplitter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CheckInDesk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BaggageSplitter.cpp">
+    <ClCompile Include="Flight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlightScheduler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Terminal.cpp">
@@ -39,41 +119,42 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FlightScheduler.cpp">
+    <ClCompile Include="Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Passenger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Spawner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Flight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Baggage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CheckInDesk.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BaggageSplitter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Terminal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Airport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FlightScheduler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateMachine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLGameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
