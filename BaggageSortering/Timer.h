@@ -1,5 +1,6 @@
 #pragma once
 #include <chrono>
+#include <iostream>
 class Timer
 {
 public:
@@ -23,6 +24,8 @@ public:
 	void DisplayClock();
 	void Run();
 	static inline int GetGlobalTime() { return globalTime; }
+	static std::string GetRealTimeString();
+	static std::string GetRealTimeString(std::time_t timeToConvert);
 private:
 	int hours;
 	int minutes;

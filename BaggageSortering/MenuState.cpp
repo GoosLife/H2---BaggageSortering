@@ -4,12 +4,15 @@
 #include "CheckInState.h"
 #include "CheckInGameObject.h"
 #include "TerminalState.h"
+#include "TerminalGameObject.h"
 #include "FlightState.h"
+#include "FlightTextGameObject.h"
 #include "MenuButton.h"
 #include "MenuTabButton.h"
 #include "MenuState.h"
 #include "PlayState.h"
 #include "TextureManager.h"
+#include "Timer.h"
 #include <iostream>
 #include <vector>
 
@@ -58,18 +61,26 @@ bool MenuState::onEnter()
 
 	for (int i = 0; i < Airport::GetCheckInDesks().size(); i++)
 	{
-		GameObject* desk = new CheckInGameObject(new LoaderParams(0, 64 * (i + 1), 128, 64, "null"), Airport::GetCheckInDesks()[i]);
-		m_gameObjects.push_back(desk);
+		GameObject* terminal = new FlightTextGameObject(new LoaderParams(0, 64 * (i + 1), 128, 64, "null"), Airport::GetTerminals()[i]);
+		m_gameObjects.push_back(terminal);
 	}
 
-	static_cast<MenuTabButton*>(button1)->SetIsActive(true);
+	GameObject* clock = new TextGameObject(new LoaderParams(128 * 3, 0, 128, 64, "null"));
+	static_cast<TextGameObject*>(clock)->SetText(Timer::GetRealTimeString());
+
+	// Position the clock at the upper right corner of the window
+	static_cast<TextGameObject*>(clock)->SetPosition(TheGame::Instance()->getGameWidth() - (static_cast<TextGameObject*>(clock)->GetWidth()), 16);
 
 	m_gameObjects.push_back(button1);
 	m_gameObjects.push_back(button2);
 	m_gameObjects.push_back(button3);
 
+	m_gameObjects.push_back(clock);
+
 	std::cout << "Entering menu state...\n";
 
+	static_cast<MenuTabButton*>(button1)->SetIsActive(true);
+	
 	return true;
 }
 
@@ -92,15 +103,15 @@ bool MenuState::onExit()
 
 void MenuState::changeCheckinDeskMenu()
 {
-	TheGame::Instance()->getGameStateMachine()->changeState(new CheckInState);
+	TheGame::Instance()->getGameStateMachine()->queueState(new CheckInState);
 }
 
 void MenuState::changeTerminalMenu()
 {
-	TheGame::Instance()->getGameStateMachine()->changeState(new TerminalState);
+	TheGame::Instance()->getGameStateMachine()->queueState(new TerminalState);
 }
 
 void MenuState::changeFlightMenu()
 {
-	TheGame::Instance()->getGameStateMachine()->changeState(new FlightState);
+	TheGame::Instance()->getGameStateMachine()->queueState(new FlightState);
 }

@@ -34,6 +34,10 @@ public:
 	bool running() { return m_bRunning; }
 	SDL_Renderer* getRenderer() { return m_pRenderer; }
 	GameStateMachine* getGameStateMachine() { return m_pGameStateMachine; }
+	SDL_Window* getWindow() { return m_pWindow; }
+
+	int getGameWidth() { int result; SDL_GetWindowSize(m_pWindow, &result, NULL); return result; }
+	int getGameHeight() { int result; SDL_GetWindowSize(m_pWindow, NULL, &result); return result; }
 
 private:
 

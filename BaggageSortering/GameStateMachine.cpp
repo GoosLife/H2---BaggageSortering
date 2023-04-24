@@ -30,6 +30,8 @@ void GameStateMachine::changeState(GameState* pState)
 	// Change gamestate to new gamestate
 	m_gameStates.push_back(pState);
 	m_gameStates.back()->onEnter();
+
+	hasQueuedState = false;
 }
 
 void GameStateMachine::popState()
@@ -58,4 +60,15 @@ void GameStateMachine::render()
 	{
 		m_gameStates.back()->render();
 	}
+}
+
+void GameStateMachine::queueState(GameState* stateToQueue)
+{
+	m_queuedGameState = stateToQueue;
+	hasQueuedState = true;
+}
+
+void GameStateMachine::changeToQueuedState()
+{
+	changeState(m_queuedGameState);
 }

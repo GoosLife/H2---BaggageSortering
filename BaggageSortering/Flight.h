@@ -26,7 +26,8 @@ class Flight
 	std::string GetDepartureTime() { return realTimeDeparture; }
 	bool IsDepartureTime() { return flightTime <= Timer::GetGlobalTime(); }
 	int GetFlightTime() { return flightTime; }
-	
+	std::time_t GetDepartureTimeT() { return departureTime; }
+
 	static inline std::mutex*  GetMutex() { return mtx; }
 	static inline std::condition_variable* GetConditionVariable() { return cv; }
 
@@ -38,6 +39,7 @@ private:
 	int baggageCount = 0;
 	int flightTime;
 	std::string realTimeDeparture;
+	std::time_t departureTime;
 
 	static inline std::mutex* mtx;
 	static inline std::condition_variable* cv;

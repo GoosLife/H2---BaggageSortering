@@ -1,4 +1,6 @@
 #include "TerminalState.h"
+#include "Airport.h"
+#include "TerminalGameObject.h"
 #include "CheckInState.h"
 #include "FlightState.h"
 #include "MenuState.h"
@@ -49,13 +51,11 @@ bool TerminalState::onEnter()
 	GameObject* button2 = new MenuTabButton(new LoaderParams(128, 0, 128, 64, "terminaltab"), changeTerminalMenu);
 	GameObject* button3 = new MenuTabButton(new LoaderParams(128 * 2, 0, 128, 64, "flighttab"), changeFlightMenu);
 
-	/*
-	for (int i = 0; i < Airport::GetTerminals().size(); i++)
+	for (int i = 0; i < Airport::GetCheckInDesks().size(); i++)
 	{
 		GameObject* terminal = new TerminalGameObject(new LoaderParams(0, 64 * (i + 1), 128, 64, "null"), Airport::GetTerminals()[i]);
 		m_gameObjects.push_back(terminal);
 	}
-	*/
 
 	m_gameObjects.push_back(button1);
 	m_gameObjects.push_back(button2);
@@ -85,15 +85,15 @@ bool TerminalState::onExit()
 
 void TerminalState::changeCheckinDeskMenu()
 {
-	TheGame::Instance()->getGameStateMachine()->changeState(new CheckInState);
+	TheGame::Instance()->getGameStateMachine()->queueState(new CheckInState);
 }
 
 void TerminalState::changeTerminalMenu()
 {
-	TheGame::Instance()->getGameStateMachine()->changeState(new TerminalState);
+	TheGame::Instance()->getGameStateMachine()->queueState(new TerminalState);
 }
 
 void TerminalState::changeFlightMenu()
 {
-	TheGame::Instance()->getGameStateMachine()->changeState(new FlightState);
+	TheGame::Instance()->getGameStateMachine()->queueState(new FlightState);
 }

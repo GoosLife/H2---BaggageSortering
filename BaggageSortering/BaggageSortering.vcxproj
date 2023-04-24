@@ -28,6 +28,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Flight.h" />
     <ClInclude Include="FlightScheduler.h" />
+    <ClInclude Include="FlightTextGameObject.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
@@ -45,6 +46,7 @@
     <ClInclude Include="SDLGameObject.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="Terminal.h" />
+    <ClInclude Include="TerminalGameObject.h" />
     <ClInclude Include="TerminalState.h" />
     <ClInclude Include="TextGameObject.h" />
     <ClInclude Include="TextureManager.h" />
@@ -61,6 +63,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Flight.cpp" />
     <ClCompile Include="FlightScheduler.cpp" />
+    <ClCompile Include="FlightTextGameObject.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="InputHandler.cpp" />
@@ -74,6 +77,7 @@
     <ClCompile Include="SDLGameObject.cpp" />
     <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="Terminal.cpp" />
+    <ClCompile Include="TerminalGameObject.cpp" />
     <ClCompile Include="TerminalState.cpp" />
     <ClCompile Include="TextGameObject.cpp" />
     <ClCompile Include="TextureManager.cpp" />

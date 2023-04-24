@@ -50,3 +50,29 @@ void Timer::Run()
 		}
 	}
 }
+
+std::string Timer::GetRealTimeString()
+{
+	time_t t = time(0);
+	struct tm now;
+	localtime_s(&now, &t);
+
+	std::stringstream ss;
+	ss << std::setw(2) << std::setfill('0') << (now.tm_hour) << ':' << std::setw(2) << std::setfill('0') << (now.tm_min);
+	std::setw(0); // Reset the width to 0 so it doesn't affect other streams
+	std::setfill(' '); // Reset the fill character
+
+	return ss.str();
+}
+
+std::string Timer::GetRealTimeString(std::time_t timeToConvert) {
+	struct tm now;
+	localtime_s(&now, &timeToConvert);
+
+	std::stringstream ss;
+	ss << std::setw(2) << std::setfill('0') << (now.tm_hour) << ':' << std::setw(2) << std::setfill('0') << (now.tm_min);
+	std::setw(0); // Reset the width to 0 so it doesn't affect other streams
+	std::setfill(' '); // Reset the fill character
+
+	return ss.str();
+}

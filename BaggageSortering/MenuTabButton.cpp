@@ -1,6 +1,6 @@
 #include "MenuTabButton.h"
 
-MenuTabButton::MenuTabButton(const LoaderParams* pParams, void(*callback)()) : MenuButton(pParams, callback) {}
+MenuTabButton::MenuTabButton(const LoaderParams* pParams, void(*callback)()) : MenuButton(pParams, callback) { pParams; }
 
 void MenuTabButton::draw()
 {

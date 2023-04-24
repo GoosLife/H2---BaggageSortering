@@ -31,4 +31,6 @@ void TextGameObject::draw()
 
 void TextGameObject::update() {}
 
-void TextGameObject::clean() {}
+void TextGameObject::clean() {
+	delete this;
+}

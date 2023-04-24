@@ -17,41 +17,29 @@ void Terminal::Run()
 
 	Terminal::GetConditionVariable()->wait(ul, [&referenceToSelf] {
 
-			// Escape if the flight is full
-			if (!referenceToSelf->GetFlight()->IsFull())
+		// Escape if the flight is full
+		if (!referenceToSelf->GetFlight()->IsFull())
+		{
+			if (referenceToSelf->GetBaggageCount() > 0)
 			{
-				int startIndex = referenceToSelf->GetFlight()->GetBaggageCount();
-				int maxValue = referenceToSelf->GetFlight()->GetMaxBaggage();
-
-				int maxIterations = maxValue - startIndex;
-
-				for (int i = 0; i < maxIterations; i++)
-				{
-					if (referenceToSelf->GetBaggageCount() > 0)
-					{
-						Baggage* baggageToLoad = referenceToSelf->RemoveBaggage();
-						referenceToSelf->GetFlight()->LoadBaggage(baggageToLoad);
-					}
-					else
-					{
-						break; // No more baggage to load
-					}
-				}
+				Baggage* baggageToLoad = referenceToSelf->RemoveBaggage();
+				referenceToSelf->GetFlight()->LoadBaggage(baggageToLoad);
 			}
+		}
 
-			if (referenceToSelf->GetFlight()->IsDepartureTime())
-			{
-				referenceToSelf->GetFlight()->Depart();
-					
-				// Get the next flight
-				referenceToSelf->GetNextFlight();
-			}
+		if (referenceToSelf->GetFlight()->IsDepartureTime())
+		{
+			referenceToSelf->GetFlight()->Depart();
+
+			// Get the next flight
+			referenceToSelf->GetNextFlight();
+		}
 
 		return true;});
 
 	Terminal::GetConditionVariable()->notify_one();
 
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	std::this_thread::sleep_for(std::chrono::milliseconds(300));
 }
 
 void Terminal::AddBaggage(Baggage* baggage) {

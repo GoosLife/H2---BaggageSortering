@@ -25,7 +25,7 @@ void CheckInState::update()
 
 void CheckInState::render()
 {
-	// Select the color for drawing. It is set to red here.
+	// Select the color for drawing. It is set to white here.
 	SDL_SetRenderDrawColor(TheGame::Instance()->getRenderer(), 0, 0, 0, 255);
 
 	// Clear the entire screen to our selected color.
@@ -93,15 +93,15 @@ bool CheckInState::onExit()
 
 void CheckInState::changeCheckinDeskMenu()
 {
-	TheGame::Instance()->getGameStateMachine()->changeState(new CheckInState);
+	TheGame::Instance()->getGameStateMachine()->queueState(new CheckInState);
 }
 
 void CheckInState::changeTerminalMenu()
 {
-	TheGame::Instance()->getGameStateMachine()->changeState(new TerminalState);
+	TheGame::Instance()->getGameStateMachine()->queueState(new TerminalState);
 }
 
 void CheckInState::changeFlightMenu()
 {
-	TheGame::Instance()->getGameStateMachine()->changeState(new FlightState);
+	TheGame::Instance()->getGameStateMachine()->queueState(new FlightState);
 }

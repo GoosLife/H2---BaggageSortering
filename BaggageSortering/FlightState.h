@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "GameState.h"
+#include "TextGameObject.h"
 #include <vector>
 
 class FlightState : public GameState
@@ -17,8 +18,10 @@ public:
 private:
 	static const std::string s_menuID;
 	std::vector<GameObject*> m_gameObjects;
+	TextGameObject* m_clock;
 
-	static void s_menuToPlay();
-	static void s_exitFromMenu();
+	static void changeCheckInDeskMenu();
+	static void changeTerminalMenu();
+	static void changeFlightMenu();
 };
 

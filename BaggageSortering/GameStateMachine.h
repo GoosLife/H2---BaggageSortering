@@ -17,7 +17,15 @@ public:
 	void update();
 	void render();
 
+	void queueState(GameState* stateToQueue);
+	void changeToQueuedState();
+
+	bool getHasQueuedState() { return hasQueuedState; }
+
 private:
 	// Array containing all the currently active game states.
 	std::vector<GameState*> m_gameStates;
+	GameState* m_queuedGameState;
+
+	bool hasQueuedState = false;
 };

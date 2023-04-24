@@ -19,6 +19,9 @@
 const int FPS = 60; // Target framerate
 const int DELAY_TIME = 1000 / FPS; // Exact time to wait between frames
 
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
+
 int main(int argc, char* argv[])
 {
     /*
@@ -47,6 +50,7 @@ int main(int argc, char* argv[])
     for (int i = 0; i < Airport::NumberOfTerminals; i++)
     {
         terminals[i] = new Terminal(i);
+        Airport::AddTerminal(terminals[i]);
     }
 
     // Start the check in desks
@@ -177,6 +181,10 @@ int main(int argc, char* argv[])
             Game::Instance()->handleEvents();
             Game::Instance()->update();
             Game::Instance()->render();
+
+            if (Game::Instance()->getGameStateMachine()->getHasQueuedState()) {
+                Game::Instance()->getGameStateMachine()->changeToQueuedState();
+            }
 
             frameTime = SDL_GetTicks() - frameStart; // Time between start of frame and now
 

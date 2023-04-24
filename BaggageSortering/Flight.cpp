@@ -11,7 +11,7 @@ Flight::Flight() {
 
 	std::chrono::system_clock::time_point currTime = std::chrono::system_clock::now();
 	currTime += std::chrono::seconds(timeToDeparture);
-	std::time_t departureTime = std::chrono::system_clock::to_time_t(currTime);
+	departureTime = std::chrono::system_clock::to_time_t(currTime);
 	// std::chrono::seconds(timeToDeparture);
 
 	char s_now[26];
