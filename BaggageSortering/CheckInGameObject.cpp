@@ -10,8 +10,6 @@ CheckInGameObject::CheckInGameObject(const LoaderParams* pParams, CheckInDesk* d
 	this->desk = desk;
 
 	this->update(); // Update the text to the correct value on creation
-
-	delete pParams;
 }
 
 void CheckInGameObject::draw()
