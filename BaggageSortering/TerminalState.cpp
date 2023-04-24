@@ -1,21 +1,14 @@
-#include "Game.h"
-#include "Airport.h"
-#include "CheckInDesk.h"
-#include "CheckInState.h"
-#include "CheckInGameObject.h"
 #include "TerminalState.h"
+#include "CheckInState.h"
 #include "FlightState.h"
-#include "MenuButton.h"
-#include "MenuTabButton.h"
 #include "MenuState.h"
-#include "PlayState.h"
+#include "Game.h"
+#include "MenuTabButton.h"
 #include "TextureManager.h"
-#include <iostream>
-#include <vector>
 
-const std::string MenuState::s_menuID = "TABMENU";
+const std::string TerminalState::s_terminalID = "TERMINAL";
 
-void MenuState::update()
+void TerminalState::update()
 {
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
@@ -23,9 +16,9 @@ void MenuState::update()
 	}
 }
 
-void MenuState::render()
+void TerminalState::render()
 {
-	// Select the color for drawing. It is set to white here.
+	// Select the color for drawing. It is set to red here.
 	SDL_SetRenderDrawColor(TheGame::Instance()->getRenderer(), 0, 0, 0, 255);
 
 	// Clear the entire screen to our selected color.
@@ -37,7 +30,7 @@ void MenuState::render()
 	}
 }
 
-bool MenuState::onEnter()
+bool TerminalState::onEnter()
 {
 	if (!TheTextureManager::Instance()->load("assets/menutabbuttons/tab_checkindesks.png", "checkintab", TheGame::Instance()->getRenderer()))
 	{
@@ -52,28 +45,28 @@ bool MenuState::onEnter()
 		return false;
 	}
 
-	GameObject* button1 = new MenuTabButton(new LoaderParams(0,       0, 128, 64, "checkintab"), changeCheckinDeskMenu);
-	GameObject* button2 = new MenuTabButton(new LoaderParams(128,     0, 128, 64, "terminaltab"), changeTerminalMenu);
+	GameObject* button1 = new MenuTabButton(new LoaderParams(0, 0, 128, 64, "checkintab"), changeCheckinDeskMenu);
+	GameObject* button2 = new MenuTabButton(new LoaderParams(128, 0, 128, 64, "terminaltab"), changeTerminalMenu);
 	GameObject* button3 = new MenuTabButton(new LoaderParams(128 * 2, 0, 128, 64, "flighttab"), changeFlightMenu);
 
-	for (int i = 0; i < Airport::GetCheckInDesks().size(); i++)
+	/*
+	for (int i = 0; i < Airport::GetTerminals().size(); i++)
 	{
-		GameObject* desk = new CheckInGameObject(new LoaderParams(0, 64 * (i + 1), 128, 64, "null"), Airport::GetCheckInDesks()[i]);
-		m_gameObjects.push_back(desk);
+		GameObject* terminal = new TerminalGameObject(new LoaderParams(0, 64 * (i + 1), 128, 64, "null"), Airport::GetTerminals()[i]);
+		m_gameObjects.push_back(terminal);
 	}
-
-	static_cast<MenuTabButton*>(button1)->SetIsActive(true);
+	*/
 
 	m_gameObjects.push_back(button1);
 	m_gameObjects.push_back(button2);
 	m_gameObjects.push_back(button3);
 
-	std::cout << "Entering menu state...\n";
+	static_cast<MenuTabButton*>(button2)->SetIsActive(true);
 
 	return true;
 }
 
-bool MenuState::onExit()
+bool TerminalState::onExit()
 {
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
@@ -90,17 +83,17 @@ bool MenuState::onExit()
 	return true;
 }
 
-void MenuState::changeCheckinDeskMenu()
+void TerminalState::changeCheckinDeskMenu()
 {
 	TheGame::Instance()->getGameStateMachine()->changeState(new CheckInState);
 }
 
-void MenuState::changeTerminalMenu()
+void TerminalState::changeTerminalMenu()
 {
 	TheGame::Instance()->getGameStateMachine()->changeState(new TerminalState);
 }
 
-void MenuState::changeFlightMenu()
+void TerminalState::changeFlightMenu()
 {
 	TheGame::Instance()->getGameStateMachine()->changeState(new FlightState);
 }

@@ -5,7 +5,10 @@
 #include "TextureManager.h"
 
 #include "MenuState.h"
+#include "FlightState.h"
 #include "PlayState.h"
+
+#include <SDL_ttf.h>
 
 Game* Game::s_pInstance = 0;
 
@@ -52,6 +55,8 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		std::cout << "SDL initialization failed.\n";
 		return false;
 	}
+
+	TTF_Init(); // TODO: Handle this better
 
 	std::cout << "Initialization completed succesfully.\n";
 

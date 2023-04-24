@@ -3,7 +3,7 @@
 #include "GameState.h"
 #include <vector>
 
-class MenuState : public GameState
+class FlightState : public GameState
 {
 public:
 	virtual void update();
@@ -18,8 +18,7 @@ private:
 	static const std::string s_menuID;
 	std::vector<GameObject*> m_gameObjects;
 
-	static void changeCheckinDeskMenu();
-	static void changeTerminalMenu();
-	static void changeFlightMenu();
+	static void s_menuToPlay();
+	static void s_exitFromMenu();
 };
 

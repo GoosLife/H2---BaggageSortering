@@ -9,7 +9,7 @@
 class CheckInDesk
 {
 public:
-	CheckInDesk() {
+	CheckInDesk(int id) : id(id) {
 		for (int i = 0; i < CHECKIN_MAX_QUEUE; i++) {
 			baggage[i] = nullptr;
 		}
@@ -29,10 +29,15 @@ public:
 
 	// Getters
 	int GetBaggageCount() { return index; }
+	int GetID() { return id; }
+
+	// Static getters
+	static inline int GetMaxBaggage() { return CHECKIN_MAX_QUEUE; }
 	static inline std::mutex* GetMutex() { return mtx; }
 	static inline std::condition_variable* GetConditionVariable() { return cv; }
 
 private:
+	int id;
 	bool isFull;
 	int index = 0; // Index of the next available spot in the baggage array
 	Baggage* baggage[CHECKIN_MAX_QUEUE];

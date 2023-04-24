@@ -17,7 +17,7 @@
 #define main SDL_main
 
 const int FPS = 60; // Target framerate
-const int DELAY_TIME = 1000.0f / FPS; // Exact time to wait between frames
+const int DELAY_TIME = 1000 / FPS; // Exact time to wait between frames
 
 int main(int argc, char* argv[])
 {
@@ -36,8 +36,9 @@ int main(int argc, char* argv[])
 
     for (int i = 0; i < Airport::NumberOfCheckInDesks; i++)
     {
-        CheckInDesk* checkInDeskInstance = new CheckInDesk();
+        CheckInDesk* checkInDeskInstance = new CheckInDesk(i);
         checkInDesks[i] = checkInDeskInstance;
+        Airport::AddCheckInDesk(checkInDesks[i]);
     }
 
     // Create a number of terminals
@@ -168,7 +169,7 @@ int main(int argc, char* argv[])
         *
         */
 
-        while (true)
+        while (Game::Instance()->running())
         {
             // GUI handling
             frameStart = SDL_GetTicks(); // Get starting tick of frame

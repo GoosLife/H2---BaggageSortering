@@ -10,7 +10,7 @@ public:
 	virtual void update();
 	virtual void clean();
 
-private:
+protected:
 	enum button_state
 	{
 		MOUSE_OUT = 0,

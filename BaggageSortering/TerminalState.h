@@ -1,21 +1,21 @@
 #pragma once
-#include "GameObject.h"
+
 #include "GameState.h"
+#include "GameObject.h"
+
+#include <string>
 #include <vector>
 
-class MenuState : public GameState
+class TerminalState : public GameState
 {
 public:
 	virtual void update();
 	virtual void render();
-
 	virtual bool onEnter();
 	virtual bool onExit();
-
-	virtual std::string getStateID() const { return s_menuID; }
-
+	virtual std::string getStateID() const { return s_terminalID; }
 private:
-	static const std::string s_menuID;
+	static const std::string s_terminalID;
 	std::vector<GameObject*> m_gameObjects;
 
 	static void changeCheckinDeskMenu();

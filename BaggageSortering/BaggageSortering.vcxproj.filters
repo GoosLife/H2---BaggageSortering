@@ -69,7 +69,7 @@
     <ClInclude Include="MenuButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MenuState.h">
+    <ClInclude Include="FlightState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PauseState.h">
@@ -88,6 +88,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuTabButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TerminalState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckInState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckInGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -134,7 +152,7 @@
     <ClCompile Include="MenuButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MenuState.cpp">
+    <ClCompile Include="FlightState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PauseState.cpp">
@@ -155,8 +173,70 @@
     <ClCompile Include="Vector2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuTabButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TerminalState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckInState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckInGameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextGameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\animate.bmp">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\animate.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\animate_cut.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\body.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\btnExit.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\btnMain.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\btnPlay.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\btnResume.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\btnTemplate.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\head.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\helicopter.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\helicopter2.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\rider.bmp">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\rider.png">
+      <Filter>Header Files\Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

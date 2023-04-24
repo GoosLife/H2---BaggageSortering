@@ -3,6 +3,7 @@
 #include "InputHandler.h"
 #include "MenuButton.h"
 #include "MenuState.h"
+#include "FlightState.h"
 #include "TextureManager.h"
 
 const std::string PauseState::s_pauseID = "PAUSE";
