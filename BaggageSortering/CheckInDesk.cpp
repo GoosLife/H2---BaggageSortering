@@ -1,6 +1,22 @@
 #include "CheckInDesk.h"
 #include "Baggage.h"
 
+CheckInDesk::CheckInDesk(int id) : id(id)
+{
+	for (int i = 0; i < CHECKIN_MAX_QUEUE; i++)
+	{
+		baggage[i] = nullptr;
+	}
+
+	isFull = index >= CHECKIN_MAX_QUEUE;
+}
+
+CheckInDesk::~CheckInDesk()
+{
+	delete(mtx);
+	delete(cv);
+}
+
 void CheckInDesk::CheckInBaggage(Baggage* b) {
 	baggage[index] = b;
 	index++;

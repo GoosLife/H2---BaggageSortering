@@ -1,6 +1,19 @@
 #include "BaggageSplitter.h"
 #include <iostream>
 
+BaggageSplitter::BaggageSplitter(CheckInDesk** checkInDesks, Terminal** terminals)
+{
+	for (int i = 0; i < Airport::NumberOfCheckInDesks; i++)
+	{
+		this->checkInDesks[i] = checkInDesks[i];
+	}
+
+	for (int i = 0; i < Airport::NumberOfTerminals; i++)
+	{
+		this->terminals[i] = terminals[i];
+	}
+}
+
 void BaggageSplitter::Run()
 {
 	std::unique_lock ul(*CheckInDesk::GetMutex(), std::defer_lock);

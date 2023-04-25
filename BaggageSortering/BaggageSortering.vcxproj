@@ -39,7 +39,6 @@
     <ClInclude Include="FlightState.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="MenuTabButton.h" />
-    <ClInclude Include="Passenger.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
@@ -85,6 +84,7 @@
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

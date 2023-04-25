@@ -8,7 +8,7 @@
 /// <summary>
 /// Stores information about the airport, specifically the number of check-in desks and terminals
 /// </summary>
-class Airport
+static class Airport
 {
 public:
     static inline const int NumberOfCheckInDesks = 3;
