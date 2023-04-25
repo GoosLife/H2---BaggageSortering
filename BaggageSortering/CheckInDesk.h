@@ -25,7 +25,10 @@ public:
 	void CheckInBaggage(Baggage* baggage); // Add baggage to the baggage array
 	Baggage* RemoveBaggage(); // Send the baggage to the baggage sorting system
 
+	void ToggleOpen();
+
 	bool IsFull() { return index >= CHECKIN_MAX_QUEUE; } // Check if the baggage array is full
+	bool IsOpen() { return isOpen; }
 
 	// Getters
 	int GetBaggageCount() { return index; }
@@ -41,6 +44,8 @@ private:
 	bool isFull;
 	int index = 0; // Index of the next available spot in the baggage array
 	Baggage* baggage[CHECKIN_MAX_QUEUE];
+	bool isOpen = true;
+	
 	static inline std::mutex* mtx = new std::mutex();
 	static inline std::condition_variable* cv = new std::condition_variable();
 };

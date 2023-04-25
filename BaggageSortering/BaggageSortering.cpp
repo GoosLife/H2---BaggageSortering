@@ -74,6 +74,13 @@ int main(int argc, char* argv[])
                     {
                         break;
                     }
+                    else if (!checkInDesks[index]->IsOpen())
+                    {
+                        while (!checkInDesks[index]->IsOpen())
+                        {
+                            std::this_thread::sleep_for(std::chrono::seconds(1));
+                        }
+                    }
                     else
                     {
                         std::unique_lock ul(*CheckInDesk::GetMutex(), std::defer_lock);
@@ -146,7 +153,7 @@ int main(int argc, char* argv[])
     }
 
     // Create clock
-    Timer* t = new Timer(23, 59, 30);
+    Timer* t = new Timer();
 
     std::thread timerThread([t]
         {

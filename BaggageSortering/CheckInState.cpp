@@ -17,6 +17,11 @@ const std::string CheckInState::s_checkInID = "CHECKIN";
 
 void CheckInState::update()
 {
+	for (int i = 0; i < m_checkInDeskButtons.size(); i++)
+	{
+		m_checkInDeskButtons[i]->update();
+	}
+
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->update();
@@ -30,6 +35,11 @@ void CheckInState::render()
 
 	// Clear the entire screen to our selected color.
 	SDL_RenderClear(TheGame::Instance()->getRenderer());
+
+	for (int i = 0; i < m_checkInDeskButtons.size(); i++)
+	{
+		m_checkInDeskButtons[i]->draw();
+	}
 
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
@@ -51,6 +61,14 @@ bool CheckInState::onEnter()
 	{
 		return false;
 	}
+	if (!TheTextureManager::Instance()->load("Assets/CheckInDeskOpenClose/off-button.png", "checkin-off", TheGame::Instance()->getRenderer()))
+	{
+		return false;
+	}
+	if (!TheTextureManager::Instance()->load("assets/CheckInDeskOpenClose/on-button.png", "checkin-on", TheGame::Instance()->getRenderer()))
+	{
+		return false;
+	}
 
 	GameObject* button1 = new MenuTabButton(new LoaderParams(0, 0, 128, 64, "checkintab"), changeCheckinDeskMenu);
 	GameObject* button2 = new MenuTabButton(new LoaderParams(128, 0, 128, 64, "terminaltab"), changeTerminalMenu);
@@ -68,6 +86,14 @@ bool CheckInState::onEnter()
 	m_gameObjects.push_back(button2);
 	m_gameObjects.push_back(button3);
 
+	// Create toggles to turn the checkin desks on and off
+	for (int i = 0; i < Airport::GetCheckInDesks().size(); i++)
+	{
+		std::string state = Airport::GetCheckInDesks()[i]->IsOpen() ? "checkin-on" : "checkin-off"; // Set the state of the toggle to on or off depending on the state of the checkin desk
+		MenuButton* toggle = new MenuButton(new LoaderParams(static_cast<TextGameObject*>(m_gameObjects[i])->GetWidth() * 3, 64 * (i + 1) - 10, 64, 64, state), toggleCheckInDesk, i); // Create the toggle
+		m_checkInDeskButtons.push_back(toggle); // Add the toggle to the gameobjects vector
+	}
+
 	std::cout << "Entering menu state...\n";
 
 	return true;
@@ -75,6 +101,11 @@ bool CheckInState::onEnter()
 
 bool CheckInState::onExit()
 {
+	for (int i = 0; i < m_checkInDeskButtons.size(); i++)
+	{
+		m_checkInDeskButtons[i]->clean();
+	}
+	
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->clean();
@@ -85,6 +116,8 @@ bool CheckInState::onExit()
 	TheTextureManager::Instance()->clearFromTextureMap("checkintab");
 	TheTextureManager::Instance()->clearFromTextureMap("terminaltab");
 	TheTextureManager::Instance()->clearFromTextureMap("flighttab");
+	TheTextureManager::Instance()->clearFromTextureMap("checkin-off");
+	TheTextureManager::Instance()->clearFromTextureMap("checkin-on");
 
 	std::cout << "Exiting menu state...\n";
 
@@ -104,4 +137,9 @@ void CheckInState::changeTerminalMenu()
 void CheckInState::changeFlightMenu()
 {
 	TheGame::Instance()->getGameStateMachine()->queueState(new FlightState);
+}
+
+void CheckInState::toggleCheckInDesk(int deskNumber)
+{
+	Airport::GetCheckInDesks()[deskNumber]->ToggleOpen();
 }

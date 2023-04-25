@@ -16,3 +16,8 @@ Baggage* CheckInDesk::RemoveBaggage() {
 	index--;
 	return b;
 }
+
+void CheckInDesk::ToggleOpen()
+{
+	isOpen = !isOpen;
+}

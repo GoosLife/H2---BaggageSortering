@@ -6,6 +6,24 @@
 #include <thread>
 #include <windows.h>
 
+Timer::Timer()
+{
+	std::chrono::time_point currTime = std::chrono::system_clock::now();
+	std::chrono::time_point l_later = currTime + std::chrono::seconds(10);
+
+	std::time_t printableCurrTime = std::chrono::system_clock::to_time_t(currTime);
+	std::time_t printableLater = std::chrono::system_clock::to_time_t(l_later);
+
+
+	char s_now[26];
+	ctime_s(s_now, sizeof(s_now), &printableCurrTime);
+
+	char s_then[26];
+	ctime_s(s_then, sizeof(s_then), &printableLater);
+
+	static_later = printableLater;
+}
+
 void Timer::DisplayClock()
 {
 
@@ -28,26 +46,6 @@ void Timer::Run()
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 
 		globalTime++;
-
-		seconds++;
-
-		if (seconds == 60) { 
-			seconds = 0;
-			
-			minutes++;
-
-			if (minutes == 60) {
-				minutes = 0;
-				
-				hours++;
-
-				if (hours == 24) {
-					hours = 0;
-				}
-
-			}
-			
-		}
 	}
 }
 
@@ -60,7 +58,7 @@ std::string Timer::GetRealTimeString()
 	std::stringstream ss;
 	ss << std::setw(2) << std::setfill('0') << (now.tm_hour) << ':' << std::setw(2) << std::setfill('0') << (now.tm_min);
 	std::setw(0); // Reset the width to 0 so it doesn't affect other streams
-	std::setfill(' '); // Reset the fill character
+	std::setfill(' '); // Reset the fill character 
 
 	return ss.str();
 }
