@@ -40,7 +40,6 @@ private:
 	int id;
 	int index = 0;
 	
-	void LoadPlane(); // Takes all the baggage from the terminal and loads it onto the plane
 	void GetNextFlight(); // Get the next flight from the flight list
 
 	static inline std::mutex* mtx = new std::mutex();
